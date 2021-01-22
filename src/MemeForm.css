@@ -1,0 +1,12 @@
+.MemeForm {
+    position: relative;
+    margin: auto;
+    width: fit-content;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.MemeForm-input {
+    float: right;
+    margin-left: 10px;
+}
