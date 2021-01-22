@@ -1,4 +1,6 @@
-const INITIAL_STATE = { memes: [] };
+const storageMemes = localStorage.getItem('memes');
+const initialMemes = storageMemes ? JSON.parse(storageMemes) : [];
+const INITIAL_STATE = { memes: initialMemes };
 
 const findIndex = (list, id) => {
     let i = 0;
@@ -12,12 +14,16 @@ const findIndex = (list, id) => {
 const rootReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'ADD':
-            return { ...state, memes: [...state.memes, action.payload] };
+            const addState = { ...state, memes: [...state.memes, action.payload] };
+            localStorage.setItem('memes', JSON.stringify(addState.memes));
+            return addState;
         case 'REMOVE':
             const memeList = [...state.memes];
             const index = findIndex(memeList, action.payload);
             memeList.splice(index, 1);
-            return { ...state, memes: memeList };
+            const removeState = { ...state, memes: memeList };
+            localStorage.setItem('memes', JSON.stringify(removeState.memes));
+            return removeState;
         default:
             return { ...state };
     }
