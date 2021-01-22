@@ -12,18 +12,39 @@ const findIndex = (list, id) => {
 }
 
 const rootReducer = (state = INITIAL_STATE, action) => {
+    const memeList = [...state.memes];
+    const index = action.type === 'ADD' ? null : findIndex(memeList, action.payload);
+
     switch (action.type) {
         case 'ADD':
             const addState = { ...state, memes: [...state.memes, action.payload] };
             localStorage.setItem('memes', JSON.stringify(addState.memes));
             return addState;
         case 'REMOVE':
-            const memeList = [...state.memes];
-            const index = findIndex(memeList, action.payload);
             memeList.splice(index, 1);
             const removeState = { ...state, memes: memeList };
             localStorage.setItem('memes', JSON.stringify(removeState.memes));
             return removeState;
+        case 'EDIT':
+            memeList[index].editing = true;
+            const editState = { ...state, memes: memeList };
+            localStorage.setItem('memes', JSON.stringify(editState.memes));
+            return editState;
+        case 'CANCEL_EDIT':
+            memeList[index].editing = false;
+            const cancelEditState = { ...state, memes: memeList };
+            localStorage.setItem('memes', JSON.stringify(cancelEditState.memes));
+            return cancelEditState;
+        case 'SUBMIT_EDIT':
+            const meme = memeList[index];
+            const editedMeme = action.newData;
+            meme.editing = false;
+            meme.imageUrl = editedMeme.imageUrl;
+            meme.topText = editedMeme.topText;
+            meme.bottomText = editedMeme.bottomText;
+            const submitEditState = { ...state, memes: memeList };
+            localStorage.setItem('memes', JSON.stringify(submitEditState.memes));
+            return submitEditState;
         default:
             return { ...state };
     }

@@ -23,7 +23,7 @@ const MemeForm = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        const newMeme = { ...formData, id: uuid() };
+        const newMeme = { ...formData, id: uuid(), editing: false };
         setFormData(initialFormData);
         dispatch({ type: 'ADD', payload: newMeme });
     }

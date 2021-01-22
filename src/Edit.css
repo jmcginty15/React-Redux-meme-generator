@@ -1,0 +1,16 @@
+.Edit {
+    position: relative;
+    margin: auto;
+    width: fit-content;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.Edit-input {
+    float: right;
+    margin-left: 10px;
+}
+
+.Edit-button {
+    margin-left: 3px;
+}
